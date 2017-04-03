@@ -9,6 +9,7 @@ object Chap2 {
   def abs(x: Int): Int = if (x < 1) -x else x
 
   def factorial(x: Int): Int = {
+    @annotation.tailrec
     def loop(n: Int, acc: Int): Int = if (n <= 0) acc else loop(n - 1, n * acc)
 
     loop(x, 1)
