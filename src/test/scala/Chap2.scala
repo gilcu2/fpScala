@@ -50,6 +50,16 @@ class ExercisesChap2Test extends FlatSpec with Matchers {
     r should be(false)
   }
 
+  "curry" should "construct a function of function " in {
+    val f = (a: Int, b: Int) => a + b
+    val fcurry = ExercisesChap2.curry(f)
+    f(2, 3) should be(fcurry(2)(3))
+  }
 
+  "uncurry" should "deconstruct a function of function " in {
+    val f = (a: Int) => ((b: Int) => a + b)
+    val funcurry = ExercisesChap2.uncurry(f)
+    f(2)(3) should be(funcurry(2, 3))
+  }
 
 }
