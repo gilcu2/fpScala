@@ -15,13 +15,13 @@ object Chap2 {
     loop(x, 1)
   }
 
-  private def formatAbs(x: Int) = {
-    val msg = "The absolute value of %d is %d"
-    msg.format(x, abs(x))
+  private def formatResult(x: Int, f: Int => Int, label: String) = {
+    label.format(x, f(x))
   }
 
   def main(args: Array[String]) = {
-    println(formatAbs(-42))
+    println(formatResult(-42, abs, "The absolute value of %d is %d"))
+    println(formatResult(7, factorial, "The factorial of %d is %d"))
   }
 
 }

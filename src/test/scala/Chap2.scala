@@ -16,8 +16,8 @@ class Chap2Test extends FlatSpec with Matchers {
   }
 
   "Chap2" should "implement fibonacci" in {
-    val r = ExercisesChap2.fibonacci(5)
-    r should be(5)
+    val r = ExercisesChap2.fibonacci(6)
+    r should be(8)
   }
 
 }
