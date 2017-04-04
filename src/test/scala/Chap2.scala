@@ -62,4 +62,11 @@ class ExercisesChap2Test extends FlatSpec with Matchers {
     f(2)(3) should be(funcurry(2, 3))
   }
 
+  "compose" should "construct a function from two functions " in {
+    val f1 = (a: Int) => a + 1
+    val f2 = (a: Int) => 2 * a
+    val fcompose = ExercisesChap2.compose(f1, f2)
+    f1(f2(2)) should be(fcompose(2))
+  }
+
 }
