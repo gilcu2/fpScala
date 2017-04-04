@@ -15,11 +15,6 @@ object List {
     if (as.isEmpty) Nil
     else Cons(as.head, apply(as.tail: _*))
 
-  def sum(l: List[Int]): Int = l match {
-    case Nil => 0
-    case Cons(h, t) => h + sum(t)
-  }
-
   def tail[A](l: List[A]): List[A] = l match {
     case Nil => Nil
     case Cons(_, t) => t
@@ -38,9 +33,9 @@ object List {
     }
   }
 
-  def dropWhile[A](l: List[A], f: A => Boolean): List[A] =
+  def dropWhile[A](l: List[A])(f: A => Boolean): List[A] =
     l match {
-      case Cons(h, t) if (f(h)) => dropWhile(t, f)
+      case Cons(h, t) if (f(h)) => dropWhile(t)(f)
       case _ => l
     }
 
@@ -56,6 +51,14 @@ object List {
       case Cons(h, Nil) => Nil
       case Cons(h, t) => Cons(h, init(t))
     }
+
+  def foldRight[A, B](l: List[A], z: B)(f: (A, B) => B): B =
+    l match {
+      case Nil => z
+      case Cons(h, t) => f(h, foldRight(t, z)(f))
+    }
+
+  def sum(l: List[Int]): Int = foldRight(l, 0)(_ + _)
 
 }
 

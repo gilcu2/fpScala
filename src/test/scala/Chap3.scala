@@ -33,9 +33,19 @@ class Chap3Test extends FlatSpec with Matchers {
     r should be(List(-1, 2, 3, 4, 5))
   }
 
+  "List" should "dropWhile" in {
+    val r = dropWhile(List(1, 2, 3, 4, 5))(_ < 3)
+    r should be(List(3, 4, 5))
+  }
+
   "List" should "return init" in {
     val r = init(List(1, 2, 3, 4, 5))
     r should be(List(1, 2, 3, 4))
+  }
+
+  "List" should "sum" in {
+    val r = sum(List(1, 2, 3, 4, 5))
+    r should be(15)
   }
 
 }
