@@ -3,6 +3,8 @@
   */
 package com.gilcu2.fpbook
 
+import scala.annotation.tailrec
+
 sealed trait List[+A]
 
 case object Nil extends List[Nothing]
@@ -58,7 +60,18 @@ object List {
       case Cons(h, t) => f(h, foldRight(t, z)(f))
     }
 
-  def sum(l: List[Int]): Int = foldRight(l, 0)(_ + _)
+  @tailrec
+  def foldLeft[A, B](l: List[A], z: B)(f: (A, B) => B): B =
+    l match {
+      case Nil => z
+      case Cons(h, t) => foldLeft(t, f(h, z))(f)
+    }
+
+  def sum(l: List[Int]): Int = foldLeft(l, 0)(_ + _)
+
+  def length[A](l: List[A]): Int = foldLeft(l, 0)((x, y) => 1 + y)
+
+  def reverse[A](l: List[A]): List[A] = foldLeft(l, List[A]())((x, y) => Cons(x, y))
 
 }
 

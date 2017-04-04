@@ -48,4 +48,19 @@ class Chap3Test extends FlatSpec with Matchers {
     r should be(15)
   }
 
+  "foldRight" should "work with Cons" in {
+    val r = foldRight(List(1, 2, 3, 4, 5), Nil: List[Int])(Cons(_, _))
+    r should be(List(1, 2, 3, 4, 5))
+  }
+
+  "List" should "lenght" in {
+    val r = List.length(List(1, 2, 3, 4, 5))
+    r should be(5)
+  }
+
+  "List" should "reverse" in {
+    val r = reverse(List(1, 2, 3))
+    r should be(List(3, 2, 1))
+  }
+
 }
