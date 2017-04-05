@@ -63,4 +63,30 @@ class Chap3Test extends FlatSpec with Matchers {
     r should be(List(3, 2, 1))
   }
 
+  "List" should "append1" in {
+    val r = append1(List(1, 2, 3), List(4, 5, 6))
+    r should be(List(1, 2, 3, 4, 5, 6))
+  }
+
+  "List" should "be flat" in {
+    val r = flat(List(List(1, 2, 3), List(4, 5, 6)))
+    r should be(List(1, 2, 3, 4, 5, 6))
+  }
+
+  "List" should "map" in {
+    val r = map(List(1, 2, 3))(2 * _)
+    r should be(List(2, 4, 6))
+  }
+
+  "List" should "filter" in {
+    val r = filter1(List(1, 2, 3, 4, 5, 6))(_ % 2 == 0)
+    r should be(List(2, 4, 6))
+  }
+
+  "List" should "flatMap" in {
+    val r = flatMap1(List(1, 2, 3))(x => List(x, x))
+    r should be(List(1, 1, 2, 2, 3, 3))
+  }
+
+
 }

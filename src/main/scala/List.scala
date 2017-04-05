@@ -67,11 +67,53 @@ object List {
       case Cons(h, t) => foldLeft(t, f(h, z))(f)
     }
 
+  def foldRight1[A, B](l: List[A], z: B)(f: (A, B) => B): B = {
+    val lr = reverse(l)
+    foldLeft(lr, z)(f)
+  }
+
   def sum(l: List[Int]): Int = foldLeft(l, 0)(_ + _)
 
   def length[A](l: List[A]): Int = foldLeft(l, 0)((x, y) => 1 + y)
 
   def reverse[A](l: List[A]): List[A] = foldLeft(l, List[A]())((x, y) => Cons(x, y))
+
+  def append1[A](a1: List[A], a2: List[A]): List[A] = {
+    val a1r = reverse(a1)
+    foldLeft(a1r, a2)((x, y) => Cons(x, y))
+  }
+
+  def flat[A](l: List[List[A]]): List[A] = foldRight1(l, List[A]())(append1)
+
+  def map[A, B](as: List[A])(f: A => B): List[B] = foldRight1(as, List[B]())((x, y) => Cons(f(x), y))
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    val f1 = (x: A, l: List[A]) => if (f(x)) Cons(x, l) else l
+    foldRight1(as, List[A]())(f1)
+  }
+
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = {
+    val l1 = map(as)(f)
+    flat(l1)
+  }
+
+  def flatMap1[A, B](as: List[A])(f: A => List[B]): List[B] = foldRight1(as, List[B]())((x, y) => append1(f(x), y))
+
+  def filter1[A](as: List[A])(f: A => Boolean): List[A] = flatMap1(as)(x => if (f(x)) List(x) else List())
+
+  def zipWith[A, B, C](la: List[A], lb: List[B])(f: (A, B) => C): List[C] = {
+
+    def loop(l1: List[A], l2: List[B], ac: List[C]): List[C] =
+      l1 match {
+        case Nil => ac
+        case Cons(h1, t1) => {
+          val (h2, t2) = l2
+          loop(t1, t2, Cons(f(h1, h2), ac))
+        }
+      }
+
+    loop(reverse(la), reverse(lb), List[C]())
+  }
 
 }
 
