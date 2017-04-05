@@ -103,13 +103,12 @@ object List {
 
   def zipWith[A, B, C](la: List[A], lb: List[B])(f: (A, B) => C): List[C] = {
 
+    @tailrec
     def loop(l1: List[A], l2: List[B], ac: List[C]): List[C] =
-      l1 match {
-        case Nil => ac
-        case Cons(h1, t1) => {
-          val (h2, t2) = l2
-          loop(t1, t2, Cons(f(h1, h2), ac))
-        }
+      (l1, l2) match {
+        case (Nil, _) => ac
+        case (_, Nil) => ac
+        case (Cons(h1, t1), Cons(h2, t2)) => loop(t1, t2, Cons(f(h1, h2), ac))
       }
 
     loop(reverse(la), reverse(lb), List[C]())

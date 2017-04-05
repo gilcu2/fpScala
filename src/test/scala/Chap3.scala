@@ -88,5 +88,9 @@ class Chap3Test extends FlatSpec with Matchers {
     r should be(List(1, 1, 2, 2, 3, 3))
   }
 
+  "List" should "zipWith" in {
+    val r = zipWith(List(1, 2, 3), List(2, 3, 4))(_ + _)
+    r should be(List(3, 5, 7))
+  }
 
 }
