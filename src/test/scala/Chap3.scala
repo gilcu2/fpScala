@@ -7,10 +7,11 @@ package com.gilcu2.fpbook.tests
 
 import org.scalatest._
 import com.gilcu2.fpbook._
-import List._
 
 
-class Chap3Test extends FlatSpec with Matchers {
+class ListTest extends FlatSpec with Matchers {
+
+  import List._
 
   "List" should "match 3 case" in {
     val r = List(1, 2, 3, 4, 5) match {
@@ -91,6 +92,24 @@ class Chap3Test extends FlatSpec with Matchers {
   "List" should "zipWith" in {
     val r = zipWith(List(1, 2, 3), List(2, 3, 4))(_ + _)
     r should be(List(3, 5, 7))
+  }
+
+  "List" should "test for subsecuence" in {
+    val r = hasSubsequence(List(1, 2, 3, 4), List(2, 3))
+    r should be(true)
+  }
+
+}
+
+class TreeTest extends FlatSpec with Matchers {
+
+  import Tree._
+
+  "List" should "return size" in {
+    val r = Tree.size(Branch(
+      Branch(Leaf(1), Leaf(2)),
+      Leaf(3)))
+    r should be(3)
   }
 
 }
