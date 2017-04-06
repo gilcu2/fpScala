@@ -105,11 +105,43 @@ class TreeTest extends FlatSpec with Matchers {
 
   import Tree._
 
-  "List" should "return size" in {
+  "Tree" should "return size" in {
     val r = Tree.size(Branch(
       Branch(Leaf(1), Leaf(2)),
       Leaf(3)))
-    r should be(3)
+    r should be(5)
+  }
+
+  "Tree" should "return dept" in {
+    val r = depth(Branch(
+      Branch(Leaf(1), Leaf(2)),
+      Leaf(3)))
+    r should be(2)
+  }
+
+  "Tree" should "map" in {
+    val r = map(Branch(
+      Branch(Leaf(1), Leaf(2)),
+      Leaf(3)))(_ * 2)
+    r should be(Branch(
+      Branch(Leaf(2), Leaf(4)),
+      Leaf(6)))
+  }
+
+  "Tree" should "return size1" in {
+    val r = Tree.size1(Branch(
+      Branch(Leaf(1), Leaf(2)),
+      Leaf(3)))
+    r should be(5)
+  }
+
+  "Tree" should "map1" in {
+    val r = map1(Branch(
+      Branch(Leaf(1), Leaf(2)),
+      Leaf(3)))(_ * 2)
+    r should be(Branch(
+      Branch(Leaf(2), Leaf(4)),
+      Leaf(6)))
   }
 
 }
