@@ -22,3 +22,18 @@ class OptionTest extends FlatSpec with Matchers {
 
 }
 
+class Chap4Test extends FlatSpec with Matchers {
+
+  import ExercisesChap4._
+
+  "Variance" should "compute empty list" in {
+    val r = variance(Seq())
+    r should be(None)
+  }
+
+  "Variance" should "compute non empty list" in {
+    val r = variance(Seq(1, 2, 3))
+    r shouldBe a[Some[Double]]
+  }
+
+}

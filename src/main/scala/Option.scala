@@ -27,3 +27,15 @@ trait Option[+A] {
 case class Some[+A](get: A) extends Option[A]
 
 case object None extends Option[Nothing]
+
+object Option {
+
+  def Try[A](a: => A): Option[A] =
+    try Some(a)
+    catch {
+      case e: Exception => None
+    }
+
+  def sequence[A](a: List[Option[A]]): Option[List[A]]
+
+}
