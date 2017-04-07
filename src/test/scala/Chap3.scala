@@ -11,6 +11,7 @@ import com.gilcu2.fpbook._
 
 class ListTest extends FlatSpec with Matchers {
 
+  import list._
   import List._
 
   "List" should "match 3 case" in {

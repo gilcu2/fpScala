@@ -33,7 +33,28 @@ class Chap4Test extends FlatSpec with Matchers {
 
   "Variance" should "compute non empty list" in {
     val r = variance(Seq(1, 2, 3))
-    r shouldBe a[Some[Double]]
+    r shouldBe a[Some[_]]
   }
+
+  "secuence" should "unpack List[Option] without None" in {
+    val r = Option.sequence(List(Some(1), Some(2), Some(3)))
+    r should be(Some(List(1, 2, 3)))
+  }
+
+  "secuence" should "unpack List[Option] with None" in {
+    val r = Option.sequence(List(Some(1), None, Some(3)))
+    r should be(None)
+  }
+
+  "traverse" should "process List without problem" in {
+    val r = Option.traverse(List("1", "2", "3"))(x => Option.Try(x.toInt))
+    r should be(Some(List(1, 2, 3)))
+  }
+
+  "traverse" should "process List with problem" in {
+    val r = Option.traverse(List("1", "k", "3"))(x => Option.Try(x.toInt))
+    r should be(None)
+  }
+
 
 }

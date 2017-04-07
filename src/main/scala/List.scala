@@ -1,7 +1,7 @@
 /**
   * Created by gilcu2 on 04/04/2017.
   */
-package com.gilcu2.fpbook
+package com.gilcu2.fpbook.list
 
 import scala.annotation.tailrec
 

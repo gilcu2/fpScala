@@ -36,6 +36,18 @@ object Option {
       case e: Exception => None
     }
 
-  def sequence[A](a: List[Option[A]]): Option[List[A]]
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+    a match {
+      case Nil => Some(Nil)
+      case h :: t => h.flatMap(hh => sequence(t).map(hh :: _))
+    }
+
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+    a match {
+      case Nil => Some(Nil)
+      case h :: t => f(h).flatMap(fh => traverse(t)(f).map(fh :: _))
+    }
+
+  def sequence1[A](a: List[Option[A]]): Option[List[A]] = traverse(a)(x => x)
 
 }
