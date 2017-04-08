@@ -1,6 +1,7 @@
 /**
-  * Created by gilcu2 on 08/04/2017.
+  * Created by gilcu2 on 07/04/2017.
   */
+
 package com.gilcu2.fpbook
 
 sealed trait Either[+E, +A] {
@@ -23,8 +24,15 @@ sealed trait Either[+E, +A] {
       case Left(x) => b
     }
 
-  def map2[EE >: E, B, C](b: => Either[EE, B])(f: (A, B) => C): Either[EE, B] = kk
+  def map2[EE >: E, B, C](b: => Either[EE, B])(f: (A, B) => C): Either[EE, C] =
+    (this, b) match {
+      case (Right(x), Right(y)) => Right(f(x, y))
+      case (Left(x), _) => Left(x)
+      case (_, Left(x)) => Left(x)
+    }
 
+  def map2_1[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] =
+    for {a <- this; b1 <- b} yield f(a, b1)
 
 
 }
