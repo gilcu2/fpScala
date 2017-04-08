@@ -22,6 +22,16 @@ class OptionTest extends FlatSpec with Matchers {
 
 }
 
+class EitherTest extends FlatSpec with Matchers {
+
+  "Either" should "map" in {
+    val r = Some(1).filter(_ == 1)
+    r should be(Some(1))
+  }
+
+}
+
+
 class Chap4Test extends FlatSpec with Matchers {
 
   import ExercisesChap4._

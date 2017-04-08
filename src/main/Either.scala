@@ -3,7 +3,7 @@
   */
 package com.gilcu2.fpbook
 
-trait Either[+E, +A] {
+sealed trait Either[+E, +A] {
 
   def map[B](f: A => B): Either[E, B] =
     this match {
@@ -17,7 +17,14 @@ trait Either[+E, +A] {
       case Left(x) => Left(x)
     }
 
-  def orElse[EE >: E, B >: A]()
+  def orElse[EE >: E, B >: A](b: => Either[EE, B]): Either[EE, B] =
+    this match {
+      case Right(x) => Right(x)
+      case Left(x) => b
+    }
+
+  def map2[EE >: E, B, C](b: => Either[EE, B])(f: (A, B) => C): Either[EE, B] = kk
+
 
 
 }
