@@ -2,7 +2,7 @@
   * Created by gilcu2 on 07/04/2017.
   */
 
-package com.gilcu2.fpbook
+package com.gilcu2.fpbook.chap4
 
 trait Option[+A] {
 

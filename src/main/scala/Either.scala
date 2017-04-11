@@ -2,7 +2,7 @@
   * Created by gilcu2 on 07/04/2017.
   */
 
-package com.gilcu2.fpbook
+package com.gilcu2.fpbook.chap4
 
 sealed trait Either[+E, +A] {
 
@@ -34,6 +34,13 @@ sealed trait Either[+E, +A] {
   def map2_1[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] =
     for {a <- this; b1 <- b} yield f(a, b1)
 
+  def traverse[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] =
+    as match {
+      case Nil => Right(Nil)
+      case h :: t => f(h).flatMap(hh => traverse(t)(f).map(hh :: _))
+    }
+
+  def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] = traverse(es)(x => x)
 
 }
 

@@ -5,7 +5,7 @@ package com.gilcu2.fpbook.tests
 
 
 import org.scalatest._
-import com.gilcu2.fpbook._
+import com.gilcu2.fpbook.chap4._
 
 
 class OptionTest extends FlatSpec with Matchers {
