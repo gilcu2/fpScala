@@ -92,6 +92,13 @@ sealed trait Stream[+A] {
   def flatMap[B](f: A => Stream[B]): Stream[B] =
     foldRight(empty[B])((a, b) => f(a).append(b))
 
+  def mapViaUnfold[B](f: A => B): Stream[B] = unfold(this) {
+    case Cons(h, t) => Some((f(h()), t()))
+    case _ => None
+  }
+
+
+
 }
 
 case object Empty extends Stream[Nothing]
@@ -125,7 +132,22 @@ object Stream {
     go(0, 1)
   }
 
-  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] =
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = {
+    f(z) match {
+      case Some((h, s)) => cons(h, unfold(s)(f))
+      case None => empty
+    }
+  }
+
+  def from1(n: Int): Stream[Int] = unfold(n)(x => Some((x, x + 1)))
+
+  def constant1[A](a: A): Stream[A] = unfold(a)(_ => Some((a, a)))
+
+  val fibsViaUnfold =
+    unfold((0, 1)) { case (f0, f1) => Some((f0, (f1, f0 + f1))) }
+
+
+
 
 }
 
